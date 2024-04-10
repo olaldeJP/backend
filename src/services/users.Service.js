@@ -45,6 +45,13 @@ class UsersService {
   async addCartToUser(emailUser, _idCart) {
     const user = await this.#usersDao.updateCarts(emailUser, _idCart);
   }
+  async findCartById(_idCart, userEmail) {
+    const user = await this.#usersDao.findCart(_idCart, userEmail);
+    if (!user) {
+      throw new NewError(ErrorType.FORBIDDEN_USER, "THIS CART IS NOT YOURS");
+    }
+    return user;
+  }
 }
 
 export const usersService = new UsersService(userClassDao);

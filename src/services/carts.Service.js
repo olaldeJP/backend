@@ -39,7 +39,7 @@ class CartsService {
     }
     return cartsBorrado;
   }
-  async agregarProductoAlCart(_idC, product) {
+  async addProductToCart(_idC, product) {
     const productoSumado = await this.#cartsDao.addProductCart(
       _idC,
       product._id

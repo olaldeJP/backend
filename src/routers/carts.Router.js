@@ -1,7 +1,10 @@
 import { Router } from "express";
 import { getCookieToken } from "../middlewares/cookie.Middleware.js";
 import {
+  checkUserIsNotOwner,
   createNewCart,
+  findCartUser,
+  addProductToArrayUser,
   linkCartWithUser,
 } from "../middlewares/carts.Middleware.js";
 import { successCart } from "../controllers/statusManager.Controllers.js";
@@ -11,10 +14,11 @@ export const cartsRouter = new Router();
 cartsRouter.use(getCookieToken);
 cartsRouter.post("/", createNewCart, linkCartWithUser, successCart);
 cartsRouter.post(
-  "/:cId/product/:pid",
-  validarUsuarioNoSeaOwner,
-  validarCarroUser,
-  agregarProductosArregloCartsByCId
+  "/:cid/product/:pid",
+  checkUserIsNotOwner,
+  findCartUser,
+  addProductToArrayUser,
+  successCart
 );
 /*
 cartsRouter.get("/:cId", validarCarroUser, mostrarCartByCId);
