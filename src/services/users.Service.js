@@ -31,26 +31,40 @@ class UsersService {
   async findUserByEmail(query) {
     const user = await this.#usersDao.findByEmail(query);
     if (!user) {
-      throw new NewError(ErrorType.INVALID_DATA, "Email user not found");
+      throw new NewError(ErrorType.INVALID_DATA, "INVALID DATA");
     }
     return user;
   }
   async loginUser(query) {
     const user = await this.#usersDao.readOne(query);
     if (!user) {
-      throw new NewError(ErrorType.INVALID_DATA, "User not found");
+      throw new NewError(ErrorType.INVALID_DATA, "INVALID DATA");
     }
     return user;
+  }
+  async showCartsUser(_idUser) {
+    const arrayUser = await this.#usersDao.findArrayCarts(_idUser);
+    return arrayUser;
   }
   async addCartToUser(emailUser, _idCart) {
     const user = await this.#usersDao.updateCarts(emailUser, _idCart);
   }
-  async findCartById(_idCart, userEmail) {
-    const user = await this.#usersDao.findCart(_idCart, userEmail);
+  async validCartIsFromEmilUser(_idCart, userEmail) {
+    const user = await this.#usersDao.findUserByCartId(_idCart, userEmail);
     if (!user) {
       throw new NewError(ErrorType.FORBIDDEN_USER, "THIS CART IS NOT YOURS");
     }
     return user;
+  }
+  async findCartById(_id) {
+    const carts = await this.#usersDao.findCartById(_id);
+    if (!carts) {
+      throw new NewError(
+        ErrorType.INVALID_DATA,
+        "INVALID DATA - Cart not found"
+      );
+    }
+    return carts;
   }
 }
 

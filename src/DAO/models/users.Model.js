@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 import { compareHash, hashPassword } from "../../utils/crypt.js";
 import { v4 as uuidv4 } from "uuid";
+import { ErrorType, NewError } from "../../config/errors.Config.js";
 const UsersSchema = new Schema(
   {
     _id: { type: String, default: uuidv4 },
@@ -38,7 +39,7 @@ class UsersClassModel {
     return await this._toPojo(newUser);
   }
   async findByEmail(query) {
-    const user = await this.#usersDao.findOne({ email: query.email }).lean();
+    const user = await this.#usersDao.findOne({ email: query }).lean();
     if (user) {
       return await this._toPojo(user);
     }
@@ -64,16 +65,20 @@ class UsersClassModel {
   }
 
   async updateCarts(emailUser, _idCart) {
-    const array = await this.#usersDao
+    const user = await this.#usersDao
       .findOneAndUpdate(
         { email: emailUser },
         { $push: { carts: { _id: _idCart } } },
         { new: true }
       )
       .lean();
-    return array;
+    return this._toPojo(user);
   }
 
+  async findArrayCarts(_idUser) {
+    const array = await this.findUserId(_idUser);
+    return array.carts;
+  }
   async updateDate(emailUser) {
     const currentDate =
       new Date().toLocaleDateString() + "-" + new Date().toLocaleTimeString();
@@ -84,7 +89,7 @@ class UsersClassModel {
         { new: true }
       )
       .lean();
-    return update;
+    return this._toPojo(update);
   }
   async updatePassword(idUser, newPassword) {
     const updateUser = await this.#usersDao
@@ -100,11 +105,17 @@ class UsersClassModel {
     throw new Error("NOT IMPLEMENTED");
   }
 
-  async findCart(_idCart, userEmail) {
-    const array = await this.#usersDao
+  async findUserByCartId(_idCart, userEmail) {
+    const user = await this.#usersDao
       .findOne({ email: userEmail, carts: { _id: _idCart } })
       .lean();
-    return array;
+    if (!user) {
+      throw new NewError(
+        ErrorType.INVALID_DATA,
+        "INVALID DATA - Cart Not Found"
+      );
+    }
+    return this._toPojo(user);
   }
 
   async changeRol(id) {

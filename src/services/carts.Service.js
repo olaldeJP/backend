@@ -10,7 +10,10 @@ class CartsService {
   async findById(_id) {
     const carts = await this.#cartsDao.readOne(_id);
     if (!carts) {
-      throw new NewError(ErrorType.NOT_FOUND, "ID CART NOT FOUND");
+      throw new NewError(
+        ErrorType.INVALID_DATA,
+        "INVALID DATA - Id cart not found"
+      );
     }
     return carts;
   }
@@ -32,47 +35,33 @@ class CartsService {
     }
     return cartsoUpdate;
   }
-  async borrarcartsPorID(_id) {
-    const cartsBorrado = await this.#cartsDao.deleteMany(_id);
-    if (!cartsBorrado) {
-      throw new NewError(ErrorType.NOT_FOUND, "ID CART ERROR");
-    }
-    return cartsBorrado;
+  async deleteAllProducts(_id) {
+    const cartDeleted = await this.#cartsDao.deleteAll(_id);
+    return cartDeleted;
   }
   async addProductToCart(_idC, product) {
     const productoSumado = await this.#cartsDao.addProductCart(
       _idC,
       product._id
     );
+    if (!productoSumado) {
+      throw new NewError(ErrorType.ERROR_REQUEST, "Add product ERROR");
+    }
     return productoSumado;
   }
-
-  async borrarProductoAlCart(_idC, _idP) {
+  async findCartAndReplace(_idC, arrayProducts) {
+    const array = await this.#cartsDao.findAndReplaceCart(_idC, arrayProducts);
+    if (!array) {
+      throw new NewError(ErrorType.ERROR_REQUEST, "Replace Cart ERROR");
+    }
+    return array;
+  }
+  async deleteOneProductFromCart(_idC, _idP) {
     const cart = await this.#cartsDao.deleteOne(_idC, _idP);
+    if (!cart) {
+      throw new NewError(ErrorType.ERROR_REQUEST, "Delete Cart ERROR");
+    }
     return cart;
-  }
-  async validarStock(cart) {
-    for (let index = 0; index < cart.products.length; index++) {
-      let element = cart.products[index];
-      let product = await productService.buscarPorID(element._id);
-      if (!(product.stock > element.quantity)) {
-        return false;
-      }
-    }
-    return true;
-  }
-  async sumarYSacarProductos(cart) {
-    let total = 0;
-    for (let index = 0; index < cart.products.length; index++) {
-      let element = cart.products[index];
-      let product = await productService.buscarPorID(element._id);
-      total = total + element.quantity * product.price;
-      product.stock = product.stock - element.quantity;
-      await productService.actualizarProducto(product._id, {
-        stock: product.stock,
-      });
-    }
-    return total;
   }
 }
 

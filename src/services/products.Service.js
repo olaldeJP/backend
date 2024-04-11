@@ -41,6 +41,29 @@ class ProductService {
     }
     return productDelete;
   }
+  async checkStock(cart) {
+    for (let index = 0; index < cart.products.length; index++) {
+      let element = cart.products[index];
+      let product = await this.#productDao.readOne(element._id);
+      if (!(product.stock >= element.quantity)) {
+        return false;
+      }
+    }
+    return true;
+  }
+  async endsPurchase(cart) {
+    let total = 0;
+    for (let index = 0; index < cart.products.length; index++) {
+      let element = cart.products[index];
+      let product = await this.#productDao.readOne(element._id);
+      total = total + element.quantity * product.price;
+      product.stock = product.stock - element.quantity;
+      await this.#productDao.updateOne(product._id, {
+        stock: product.stock,
+      });
+    }
+    return total;
+  }
   async showPaginateProducts(data) {
     const opcionesDePaginacion = {
       limit: data.query.limit || 10,

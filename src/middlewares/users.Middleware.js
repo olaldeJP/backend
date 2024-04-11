@@ -21,7 +21,7 @@ export async function updateTime(req, res, next) {
 }
 export async function checkUserByEmail(req, res, next) {
   try {
-    req["user"] = await usersService.findUserByEmail(req.body);
+    req["user"] = await usersService.findUserByEmail(req.body.email);
     next();
   } catch (error) {
     next(error);

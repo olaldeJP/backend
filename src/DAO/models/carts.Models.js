@@ -30,32 +30,33 @@ class CartsClassDao {
   constructor(cartModel) {
     this.#cartsDao = cartModel;
   }
-  async create(data) {
+  async create() {
     const newCart = await this.#cartsDao.create({});
-    return { _id: newCart._id, products: newCart.products };
+    return await this._toPojo(newCart);
   }
   async readOne(query) {
     const cart = await this.#cartsDao.findById(query).lean();
-    return cart;
+    return this._toPojo(cart);
   }
   async readMany() {
-    const array = await this.#cartsDao.find().lean();
-    return array;
+    const array = await this.#cartsDao.find();
+    return await this._toPojo(array);
   }
   async updateOne(_idC, cart) {
-    const cartUpdate = this.#cartsDao.findOneAndUpdate(
+    const cartUpdate = await this.#cartsDao.findOneAndUpdate(
       { _id: _idC },
       { $set: cart },
       { new: true }
     );
-    return cartUpdate;
+    return await this._toPojo(cartUpdate);
   }
-  async updateMany(query, data) {}
-
   async addProductCart(_idC, _idP) {
     const cart = await this.readOne(_idC);
     if (!cart) {
-      throw new NewError(ErrorType.NOT_FOUND, "ID CART NOT FOUND");
+      throw new NewError(
+        ErrorType.NOT_FOUND,
+        "INVALID DATA - Id cart not found"
+      );
     }
     const productFind = cart.products.find((p) => {
       return p._id == _idP;
@@ -67,26 +68,62 @@ class CartsClassDao {
     }
     const updateCart = await this.updateOne(_idC, cart);
 
-    return updateCart;
+    return await this._toPojo(updateCart);
+  }
+  async findAndReplaceCart(cid, arrayProducts) {
+    const array = await this.#cartsDao.findOneAndReplace(
+      { _id: cid },
+      { products: arrayProducts },
+      { new: true }
+    );
+    return this._toPojo(array);
   }
   async deleteOne(cid, pid) {
-    const cart = await cartsMongoose
-      .findByIdAndUpdate(
-        cid,
-        { $pull: { products: { _id: pid } } },
-        { new: true }
-      )
-      .lean();
-    return cart;
+    let cart = await this.readOne(cid);
+    if (!cart) {
+      throw new NewError(
+        ErrorType.NOT_FOUND,
+        "INVALID DATA - Id cart not found"
+      );
+    }
+    const productFind = await cart.products.find((p) => {
+      return p._id == pid;
+    });
+    if (!productFind) {
+      throw new NewError(
+        ErrorType.INVALID_DATA,
+        "INVALID DATA - Product not found at this Cart"
+      );
+    } else {
+      productFind.quantity--;
+      if (productFind.quantity == 0) {
+        cart.products = await cart.products.filter(
+          (element) => element._id !== pid
+        );
+      }
+    }
+    const updateCart = await this.findAndReplaceCart(cid, cart.products);
+    return this._toPojo(updateCart);
   }
-
-  async deleteMany() {
+  async deleteAll(cid) {
     const newCart = await this.#cartsDao.findOneAndReplace(
       { _id: cid },
       { products: [] },
       { new: true }
-    ).lean;
-    return newCart;
+    );
+    if (!newCart) {
+      throw new NewError(
+        ErrorType.INVALID_DATA,
+        "INVALID DATA - Id cart not found"
+      );
+    }
+    return await this._toPojo(newCart);
+  }
+  async _toPojo(cart) {
+    return {
+      _id: cart._id,
+      products: cart.products,
+    };
   }
 }
 

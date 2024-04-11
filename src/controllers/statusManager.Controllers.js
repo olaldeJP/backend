@@ -34,3 +34,6 @@ export async function returnSession(req, res) {
 export async function successCart(req, res) {
   res.result(res.cart);
 }
+export async function succesPurchase(req, res) {
+  res.result(res.ticket);
+}

@@ -3,11 +3,22 @@ import { getCookieToken } from "../middlewares/cookie.Middleware.js";
 import {
   checkUserIsNotOwner,
   createNewCart,
-  findCartUser,
+  checkCartIsFromUser,
   addProductToArrayUser,
+  findCart,
   linkCartWithUser,
+  showCarts,
+  deleteAllProducts,
+  deleteProductFromCart,
+  replaceCart,
+  subFromDataBase,
+  saveNewTicket,
+  checkCartStock,
 } from "../middlewares/carts.Middleware.js";
-import { successCart } from "../controllers/statusManager.Controllers.js";
+import {
+  returnSuccess,
+  successCart,
+} from "../controllers/statusManager.Controllers.js";
 
 export const cartsRouter = new Router();
 
@@ -16,29 +27,32 @@ cartsRouter.post("/", createNewCart, linkCartWithUser, successCart);
 cartsRouter.post(
   "/:cid/product/:pid",
   checkUserIsNotOwner,
-  findCartUser,
+  checkCartIsFromUser,
   addProductToArrayUser,
   successCart
 );
-/*
-cartsRouter.get("/:cId", validarCarroUser, mostrarCartByCId);
-cartsRouter.get("/", mostrarListaDeCarts);
-cartsRouter.put("/:cId", validarCarroUser, actualizarCarrito);
+cartsRouter.get("/:cid", checkCartIsFromUser, findCart, successCart);
+cartsRouter.get("/", showCarts, successCart);
+cartsRouter.put("/:cid", checkCartIsFromUser, replaceCart, successCart);
 cartsRouter.delete(
-  "/:cId/products/:pid",
-  validarCarroUser,
-  borrarProductoDelCarrito
+  "/:cid/products/:pid",
+  checkCartIsFromUser,
+  deleteProductFromCart,
+  successCart
 );
 cartsRouter.delete(
-  "/:cId",
-  validarCarroUser,
-  eliminarTodosLosProductosDelCarrito
+  "/:cid",
+  checkCartIsFromUser,
+  deleteAllProducts,
+  returnSuccess
 );
+
 cartsRouter.post(
-  "/:cId/purchase",
-  validarCarroUser,
-  validarStockYSumar,
-  restarProducts,
-  finalizarCompra
+  "/:cid/purchase",
+  checkCartIsFromUser,
+  findCart,
+  checkCartStock,
+  subFromDataBase,
+  saveNewTicket,
+  returnSuccess
 );
-*/
