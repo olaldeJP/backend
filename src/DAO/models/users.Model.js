@@ -119,7 +119,7 @@ class UsersClassModel {
   }
 
   async changeRol(id) {
-    const user = await usersMongoose.findOne({ _id: id });
+    const user = await this.findUserId(id);
     if (user) {
       if (user.role === "user") {
         await this.#usersDao

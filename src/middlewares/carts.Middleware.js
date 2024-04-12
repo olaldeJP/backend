@@ -1,6 +1,6 @@
 import { cartsService } from "../services/carts.Service.js";
 import { usersService } from "../services/users.Service.js";
-import { productService } from "../services/products.service.js";
+import { productService } from "../services/products.Service.js";
 import { NewError, ErrorType } from "../config/errors.Config.js";
 import { ticketService } from "../services/ticket.Service.js";
 export async function createNewCart(req, res, next) {

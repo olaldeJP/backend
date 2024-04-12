@@ -47,3 +47,34 @@ export async function updatePassword(req, res, next) {
     next(error);
   }
 }
+
+export async function checkDocuments(req, res, next) {
+  try {
+    if (await usersService.validToChangeToPremium(req.params.idUser)) {
+      return next();
+    } else {
+      throw new NewError(
+        ErrorType.FORBIDDEN_USER,
+        "Files Required To Change To Premium"
+      );
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+export async function checkUserById(req, res, next) {
+  try {
+    req["user"] = await usersService.findUserById(req.params.uid);
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
+export async function changeRol(req, res, next) {
+  try {
+    await usersService.changeRolUser(req.params.idUser);
+    next();
+  } catch (error) {
+    next(error);
+  }
+}

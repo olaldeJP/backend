@@ -35,6 +35,13 @@ class UsersService {
     }
     return user;
   }
+  async findUserById(query) {
+    const user = await this.#usersDao.findUserId(query);
+    if (!user) {
+      throw new NewError(ErrorType.INVALID_DATA, "INVALID DATA");
+    }
+    return user;
+  }
   async loginUser(query) {
     const user = await this.#usersDao.readOne(query);
     if (!user) {
@@ -65,6 +72,46 @@ class UsersService {
       );
     }
     return carts;
+  }
+  async validToChangeToPremium(uid) {
+    const user = await this.#usersDao.findUserId(uid);
+    let identification = false;
+    let adress = false;
+    let state = false;
+
+    for (let index = 0; index < user.documents.length; index++) {
+      const element = user.documents[index];
+      if (element.name === "identification.pdf") {
+        identification = true;
+      }
+      if (element.name === "adress.pdf") {
+        adress = true;
+      }
+      if (element.name === "state.pdf") {
+        state = true;
+      }
+    }
+    if (identification && adress && state) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  async checkDocumentsArray(path, documents) {
+    for (let index = 0; index < documents.length; index++) {
+      if (documents[index].path === path) {
+        return true;
+      }
+    }
+    return false;
+  }
+  async updateArrayDocumentsUser(user) {
+    return await this.#usersDao.updateDocuments(user.email, user.documents);
+  }
+  async changeRolUser(id) {
+    const user = await this.#usersDao.changeRol(id);
+    return user;
   }
 }
 

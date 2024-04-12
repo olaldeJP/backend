@@ -4,7 +4,10 @@ import {
   updateTime,
   checkUserByEmail,
   checkToken,
+  checkUserById,
+  checkDocuments,
   updatePassword,
+  changeRol,
 } from "../middlewares/users.Middleware.js";
 import {
   welcomeEmail,
@@ -14,6 +17,9 @@ import {
   returnSuccess,
   createStatusUser,
 } from "../controllers/statusManager.Controllers.js";
+import { updateFilesUser } from "../middlewares/multer.Middleware.js";
+import { upload } from "../config/multer.Config.js";
+import { getCookieToken } from "../middlewares/cookie.Middleware.js";
 
 export const usersRouter = new Router();
 
@@ -34,5 +40,21 @@ usersRouter.get(
   "/changePassword/:tokenjwt",
   checkToken,
   updatePassword,
+  returnSuccess
+);
+
+usersRouter.put(
+  "/premium/:idUser",
+  getCookieToken,
+  checkDocuments,
+  changeRol,
+  returnSuccess
+);
+
+usersRouter.post(
+  "/:uid/documents",
+  checkUserById,
+  upload.array("files", 4),
+  updateFilesUser,
   returnSuccess
 );
