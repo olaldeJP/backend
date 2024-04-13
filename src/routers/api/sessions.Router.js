@@ -1,16 +1,15 @@
 import { Router } from "express";
 import passport from "passport";
-import { updateTime } from "../middlewares/users.Middleware.js";
+import { updateTime } from "../../middlewares/users.Middleware.js";
 import {
   getCookieToken,
   saveCookieToken,
-} from "../middlewares/cookie.Middleware.js";
+} from "../../middlewares/cookie.Middleware.js";
 import {
-  returnSuccess,
   returnSession,
-  returnCookie,
-} from "../controllers/statusManager.Controllers.js";
-import { logout } from "../middlewares/sessions.Middleware.js";
+  returnSuccess,
+} from "../../controllers/statusManager.Controllers.js";
+import { logout } from "../../middlewares/sessions.Middleware.js";
 export const sessionsRouter = new Router();
 
 sessionsRouter.post(
@@ -20,7 +19,7 @@ sessionsRouter.post(
   }),
   updateTime,
   saveCookieToken,
-  returnCookie
+  returnSuccess
 );
 
 sessionsRouter.get("/current", getCookieToken, returnSession);

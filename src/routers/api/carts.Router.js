@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getCookieToken } from "../middlewares/cookie.Middleware.js";
+import { getCookieToken } from "../../middlewares/cookie.Middleware.js";
 import {
   checkUserIsNotOwner,
   createNewCart,
@@ -14,11 +14,11 @@ import {
   subFromDataBase,
   saveNewTicket,
   checkCartStock,
-} from "../middlewares/carts.Middleware.js";
+} from "../../middlewares/carts.Middleware.js";
 import {
   returnSuccess,
   successCart,
-} from "../controllers/statusManager.Controllers.js";
+} from "../../controllers/statusManager.Controllers.js";
 
 export const cartsRouter = new Router();
 

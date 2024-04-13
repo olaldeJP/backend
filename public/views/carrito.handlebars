@@ -1,0 +1,16 @@
+
+
+ <button onclick="volver()"> VOLVER </button> 
+    {{#if products}}
+        {{#each products}}
+             <div class="box">
+                <p> {{this._id}}</p>
+                <p>Cantidad: {{this.quantity}}</p>
+            </div>
+        {{/each}}  
+    {{else}}
+    <p>Este Carro no tiene productos cargados</p>
+{{/if}}
+
+<script src="../js/home.JS.js"></script>
+{{>footer}}

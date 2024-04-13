@@ -8,18 +8,18 @@ import {
   checkDocuments,
   updatePassword,
   changeRol,
-} from "../middlewares/users.Middleware.js";
+} from "../../middlewares/users.Middleware.js";
 import {
   welcomeEmail,
   sendEmailChangePassword,
-} from "../middlewares/email.Middleware.js";
+} from "../../middlewares/email.Middleware.js";
 import {
   returnSuccess,
   createStatusUser,
-} from "../controllers/statusManager.Controllers.js";
-import { updateFilesUser } from "../middlewares/multer.Middleware.js";
-import { upload } from "../config/multer.Config.js";
-import { getCookieToken } from "../middlewares/cookie.Middleware.js";
+} from "../../controllers/statusManager.Controllers.js";
+import { updateFilesUser } from "../../middlewares/multer.Middleware.js";
+import { upload } from "../../config/multer.Config.js";
+import { getCookieToken } from "../../middlewares/cookie.Middleware.js";
 
 export const usersRouter = new Router();
 

@@ -1,6 +1,5 @@
 import { cartsClassDao } from "../DAO/models/carts.Models.js";
 import { NewError, ErrorType } from "../config/errors.Config.js";
-import { productService } from "./products.service.js";
 
 class CartsService {
   #cartsDao;

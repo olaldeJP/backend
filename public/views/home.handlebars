@@ -1,0 +1,30 @@
+
+
+<h2>Home</h2>
+<h2>Welcome</h2>
+<h2>{{user.first_name}} </h2>
+
+
+
+<select name="ordenar" id="ordenar">
+<option value="desc">Ordenar Por Precio</option>
+<option value="desc">Descendente</option>
+<option value="asc">Ascendente</option>
+</select>
+<input type="text" id="inputBuscador" placeholder="Buscardor de Producto">
+<button id="botonBuscar">Buscar</button>
+<div class="container">
+</div>
+
+
+
+<input type="number" placeholder="Limit" id='limit'><br>
+<button id="limitButton">Limit</button>
+<div class="container" id="containerProducts">
+
+</div><br>
+<button id="aPrev">Prev</button>
+<button id="aNext">Next</button>
+{{>footer}}
+
+<script   src="../js/home.JS.js"></script>

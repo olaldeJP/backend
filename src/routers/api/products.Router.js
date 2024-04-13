@@ -9,12 +9,12 @@ import {
   ownerOfProduct,
   deleteProduct,
   getProductsPaginate,
-} from "../middlewares/products.Middleware.js";
-import { getCookieToken } from "../middlewares/cookie.Middleware.js";
+} from "../../middlewares/products.Middleware.js";
+import { getCookieToken } from "../../middlewares/cookie.Middleware.js";
 import {
   succesResultProduct,
   successCreateProduct,
-} from "../controllers/statusManager.Controllers.js";
+} from "../../controllers/statusManager.Controllers.js";
 export const productsRouter = new Router();
 
 productsRouter.get("/", getAllProducts, succesResultProduct);

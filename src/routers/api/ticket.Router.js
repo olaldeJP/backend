@@ -5,9 +5,9 @@ import {
   findCart,
   saveNewTicket,
   subFromDataBase,
-} from "../middlewares/carts.Middleware.js";
-import { succesPurchase } from "../controllers/statusManager.Controllers.js";
-import { getCookieToken } from "../middlewares/cookie.Middleware.js";
+} from "../../middlewares/carts.Middleware.js";
+import { succesPurchase } from "../../controllers/statusManager.Controllers.js";
+import { getCookieToken } from "../../middlewares/cookie.Middleware.js";
 
 export const ticketRouter = new Router();
 

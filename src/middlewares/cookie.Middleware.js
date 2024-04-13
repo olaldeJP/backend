@@ -26,3 +26,16 @@ export async function getCookieToken(req, res, next) {
     next(error);
   }
 }
+
+export async function getCookieTokenWeb(req, res, next) {
+  try {
+    const signedToken = req.signedCookies.authorization;
+    if (signedToken) {
+      const tokenDecrypt = await decrypt(signedToken);
+      res.session = await usersService.findUserByEmail(tokenDecrypt.email);
+    }
+    return next();
+  } catch (error) {
+    next();
+  }
+}

@@ -1,9 +1,9 @@
 export async function statusCode(req, res, next) {
   res["created"] = (payload) => {
-    res.status(201).json({ status: "success", payload });
+    res.status(201).json({ payload });
   };
   res["result"] = (payload) => {
-    res.status(200).json({ status: "success", payload });
+    res.status(200).json({ payload });
   };
   res["accepted"] = () => {
     res.status(202).json({ status: "success" });
@@ -25,9 +25,7 @@ export async function successCreateProduct(req, res) {
 export async function succesResultProduct(req, res) {
   res.result(res.products);
 }
-export async function returnCookie(req, res) {
-  res.result(res.cookie);
-}
+
 export async function returnSession(req, res) {
   res.result(res.session);
 }
