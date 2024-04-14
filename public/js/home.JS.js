@@ -73,7 +73,7 @@ async function mostrarProductosPaginados(payload) {
     if (!(cartUser === "")) {
       newElement.insertAdjacentHTML(
         "beforeend",
-        `<button name="${payload[index]._id}" id="botonProducto">Agregar Al Carrito</button><br><br>`
+        `<br><button name="${payload[index]._id}" id="botonProducto">Agregar Al Carrito</button><br>`
       );
     }
   }
