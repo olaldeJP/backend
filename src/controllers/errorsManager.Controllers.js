@@ -8,5 +8,7 @@ export async function errorManager(error, req, res, next) {
     `${req.method}   ${error.code} - ${error.message} /
   | Date: ${new Date().toLocaleTimeString()} - ${new Date().toLocaleDateString()} `
   );
-  res.status(error.code).json({ status: "ERROR", message: error.message });
+  return res
+    .status(error.code)
+    .json({ status: "ERROR", message: error.message });
 }

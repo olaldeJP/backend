@@ -15,7 +15,7 @@ import {
 } from "../../middlewares/email.Middleware.js";
 import {
   returnSuccess,
-  createStatusUser,
+  successcreateUser,
 } from "../../controllers/statusManager.Controllers.js";
 import { updateFilesUser } from "../../middlewares/multer.Middleware.js";
 import { upload } from "../../config/multer.Config.js";
@@ -28,7 +28,7 @@ usersRouter.post(
   register,
   welcomeEmail,
   updateTime,
-  createStatusUser
+  successcreateUser
 );
 usersRouter.put(
   "/sendEmailToChange",

@@ -13,6 +13,7 @@ import {
   replaceCart,
   subFromDataBase,
   saveNewTicket,
+  checkUserHasCart,
   checkCartStock,
 } from "../../middlewares/carts.Middleware.js";
 import {
@@ -23,7 +24,13 @@ import {
 export const cartsRouter = new Router();
 
 cartsRouter.use(getCookieToken);
-cartsRouter.post("/", createNewCart, linkCartWithUser, successCart);
+cartsRouter.post(
+  "/",
+  checkUserHasCart,
+  createNewCart,
+  linkCartWithUser,
+  successCart
+);
 cartsRouter.post(
   "/:cid/product/:pid",
   checkUserIsNotOwner,

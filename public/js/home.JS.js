@@ -9,43 +9,51 @@ const inpB = document.querySelector("#inputBuscador");
 const buttonLimit = document.querySelector("#limitButton");
 const buttonNext = document.querySelector("#aNext");
 const buttonPrev = document.querySelector("#aPrev");
-
+const buttonTerminarCompra = document.querySelector("#terminarCompra");
+const botonesProductos = document.querySelectorAll("#botonProducto");
 let ordenar = true;
+let cartUser = "";
 let productsPag;
 window.addEventListener("load", async () => {
+  const user = await fetch(`/api/sessions/current`).then(async (res) => {
+    return await res.json();
+  });
+  if (user.status === "success") {
+    cartUser = user.payload.carts;
+  }
   productsPag = await fetch(`/api/products/products/Paginate`).then(
     async (res) => {
       return await res.json();
     }
   );
-  mostrarProductosPaginados(productsPag.payload.payload);
-  checkearBoton();
+  await mostrarProductosPaginados(productsPag.payload.payload);
+  await checkearBoton();
   buttonNext.addEventListener("click", async () => {
     productsPag = await fetch(
-      `/api/products/products/Paginate/?page=${productsPag.nextPage}&limit=${limit.value}`
+      `/api/products/products/Paginate/?page=${productsPag.payload.nextPage}&limit=${limit.value}`
     ).then(async (res) => {
       return await res.json();
     });
-    mostrarProductosPaginados(productsPag.payload);
-    checkearBoton();
+    await mostrarProductosPaginados(productsPag.payload.payload);
+    await checkearBoton();
   });
   buttonPrev.addEventListener("click", async () => {
     productsPag = await fetch(
-      `/api/products/products/Paginate/?page=${productsPag.prevPage}&limit=${limit.value}`
+      `/api/products/products/Paginate/?page=${productsPag.payload.prevPage}&limit=${limit.value}`
     ).then(async (res) => {
       return await res.json();
     });
-    mostrarProductosPaginados(productsPag.payload);
-    checkearBoton();
+    await mostrarProductosPaginados(productsPag.payload.payload);
+    await checkearBoton();
   });
 });
 async function checkearBoton() {
-  if (!productsPag.hasPrevPage) {
+  if (!productsPag.payload.hasPrevPage) {
     buttonPrev.disabled = true;
   } else {
     buttonPrev.disabled = false;
   }
-  if (!productsPag.hasNextPage) {
+  if (!productsPag.payload.hasNextPage) {
     buttonNext.disabled = true;
   } else {
     buttonNext.disabled = false;
@@ -60,10 +68,24 @@ async function mostrarProductosPaginados(payload) {
     <p>description: ${payload[index].description}</p>
     <p>price:${payload[index].price} </p>
     <p> STOCK: ${payload[index].stock}</p>
-    <button > + </button><br>
-    <button> Description </button>  
-    `;
+    <button> Ver Descripcion </button> <br> `;
     divContainer.appendChild(newElement);
+    if (!(cartUser === "")) {
+      newElement.insertAdjacentHTML(
+        "beforeend",
+        `<button name="${payload[index]._id}" id="botonProducto">Agregar Al Carrito</button><br><br>`
+      );
+    }
+  }
+  if (!(cartUser === "")) {
+    document.querySelectorAll("#botonProducto").forEach((boton) => {
+      // Agregar event listener a cada botón
+      boton.addEventListener("click", async function () {
+        const addProducToCartt = await fetch(
+          `/api/carts/${cartUser}/product/${this.name}`
+        );
+      });
+    });
   }
 }
 
@@ -73,7 +95,7 @@ buttonLimit.addEventListener("click", async () => {
   ).then(async (res) => {
     return await res.json();
   });
-  mostrarProductosPaginados(productsPag.payload);
+  mostrarProductosPaginados(productsPag.payload.payload);
   checkearBoton();
 });
 
@@ -85,7 +107,7 @@ ordenDeProduct.addEventListener("change", async (e) => {
   ).then(async (res) => {
     return await res.json();
   });
-  mostrarProductosPaginados(productsPag.payload);
+  mostrarProductosPaginados(productsPag.payload.payload);
   checkearBoton();
 });
 botonBuscar.addEventListener("click", async (e) => {
@@ -96,5 +118,5 @@ botonBuscar.addEventListener("click", async (e) => {
   ).then(async (res) => {
     return await res.json();
   });
-  mostrarProductosPaginados(productsPag.payload);
+  mostrarProductosPaginados(productsPag.payload.payload);
 });

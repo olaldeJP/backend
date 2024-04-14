@@ -5,7 +5,9 @@ import { NewError, ErrorType } from "../config/errors.Config.js";
 import { ticketService } from "../services/ticket.Service.js";
 export async function createNewCart(req, res, next) {
   try {
-    res["cart"] = await cartsService.createCart();
+    if (!res.session.carts) {
+      res["cart"] = await cartsService.createCart();
+    }
     return next();
   } catch (error) {
     next(error);
@@ -131,6 +133,17 @@ export async function saveNewTicket(req, res, next) {
       res.session.email
     );
     next();
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function checkUserHasCart(req, res, next) {
+  try {
+    if (!res.session.carts) {
+      return next();
+    }
+    throw new NewError(ErrorType.ERROR_REQUEST, "Has cart already");
   } catch (error) {
     next(error);
   }

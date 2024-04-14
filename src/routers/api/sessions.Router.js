@@ -8,6 +8,7 @@ import {
 import {
   returnSession,
   returnSuccess,
+  succesReturnUser,
 } from "../../controllers/statusManager.Controllers.js";
 import { logout } from "../../middlewares/sessions.Middleware.js";
 export const sessionsRouter = new Router();
@@ -19,7 +20,7 @@ sessionsRouter.post(
   }),
   updateTime,
   saveCookieToken,
-  returnSuccess
+  succesReturnUser
 );
 
 sessionsRouter.get("/current", getCookieToken, returnSession);

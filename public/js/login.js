@@ -19,7 +19,11 @@ formLogin.addEventListener("submit", async (event) => {
     });
     const res = await response.json(); // si el status es Success vuelve a / a ver los productos, sino envia una alert
     if (res.status === "success") {
-      window.location.href = `/`;
+      const cart = await fetch("/api/carts/", { method: "POST" });
+      console.log(cart.json);
+      window.location.href = `/home`;
+    } else {
+      alert("INVALID DATA");
     }
   } catch (error) {
     alert(error.message);

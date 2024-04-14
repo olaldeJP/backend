@@ -58,10 +58,10 @@ export async function loginView(req, res) {
 }
 
 export async function verPerfil(req, res) {
-  if (req.user) {
+  if (res.session) {
     res.status(201).render("perfil.handlebars", {
       status: "success",
-      user: req.user,
+      user: res.session,
     });
   } else {
     res.status(201).render("perfil.handlebars", {

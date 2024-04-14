@@ -14,7 +14,7 @@ const UsersSchema = new Schema(
       required: true,
       default: "(NotNecesaryInThisCase)",
     },
-    carts: { type: [], ref: "carts._id", default: [] },
+    carts: { type: String, ref: "carts._id" },
     documents: { type: [Object] },
     last_connection: { type: String },
     role: { type: String, enum: ["admin", "user", "premium"], default: "user" },
@@ -68,7 +68,7 @@ class UsersClassModel {
     const user = await this.#usersDao
       .findOneAndUpdate(
         { email: emailUser },
-        { $push: { carts: { _id: _idCart } } },
+        { $set: { carts: _idCart } },
         { new: true }
       )
       .lean();

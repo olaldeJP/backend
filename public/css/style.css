@@ -99,9 +99,18 @@ a:hover {
     height: 30px;
 }
 
+.containerBuscador {
+    display: flex;
+    flex-direction: row;
+}
+
 .container {
     display: flex;
     justify-content: center;
+    max-width: 100%;
+
+    margin-left: 90px;
+
 }
 
 
