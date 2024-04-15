@@ -163,6 +163,13 @@ async function terminarCompra() {
   if (ticket.status === "success") {
     alert("Gracias por su compra!");
     alert(JSON.stringify(ticket.payload));
+    const newId = await fetch(`/api/carts/`, {
+      method: "POST",
+    }).then(async (res) => {
+      return await res.json();
+    });
+    usuario.carts = newId.payload._id;
+    containerProductCart.innerHTML = "";
   } else {
     alert("PROBLEMAS CON TERMINAR LA COMPRA - CHEQUEA EL STOCK!");
   }
