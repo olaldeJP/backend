@@ -10,6 +10,7 @@ const buttonNext = document.querySelector("#aNext");
 const buttonPrev = document.querySelector("#aPrev");
 const buttonTerminarCompra = document.querySelector("#terminarCompra");
 const botonesProductos = document.querySelectorAll("#botonProducto");
+const containerProductCart = document.querySelector("#containerProductsCarts");
 let ordenar = true;
 let usuario = {};
 let cart = {};
@@ -89,7 +90,7 @@ async function mostrarProductosPaginados(payload) {
         ).then(async (res) => {
           return await res.json();
         });
-        alert(addProducToCart.payload.products);
+        actualizarListadoProductos(addProducToCart.payload.products);
       });
     });
   }
@@ -102,6 +103,16 @@ async function mostrarProductosPaginados(payload) {
   });
 }
 
+async function actualizarListadoProductos(products) {
+  containerProductCart.innerHTML = "";
+  products.forEach((product) => {
+    containerProductCart.insertAdjacentHTML(
+      "beforeend",
+      `<p>PRODUCTO : ${product._id}  | CANTIDAD: ${product.quantity}    <button name="${product._id}" onclick="restar(this.name)"> -1 </button></p> `
+    );
+  });
+}
+
 buttonLimit.addEventListener("click", async () => {
   productsPag = await fetch(
     `/api/products/products/Paginate/?limit=${limit.value}`
@@ -111,6 +122,15 @@ buttonLimit.addEventListener("click", async () => {
   mostrarProductosPaginados(productsPag.payload.payload);
   checkearBoton();
 });
+
+async function restar(name) {
+  const carts = await fetch(`/api/carts/${usuario.carts}/products/${name}`, {
+    method: "DELETE",
+  }).then(async (res) => {
+    return await res.json();
+  });
+  actualizarListadoProductos(carts.payload.products);
+}
 
 ordenDeProduct.addEventListener("change", async (e) => {
   e.preventDefault();

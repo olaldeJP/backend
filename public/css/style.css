@@ -100,8 +100,9 @@ a:hover {
 }
 
 .containerCarts {
-    width: 100%;
+    width: 60%;
     height: 80px;
+    overflow-y: auto;
     border: 2px solid rgba(48, 106, 214, 0.807);
     ;
 }
