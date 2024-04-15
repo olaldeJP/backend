@@ -78,3 +78,12 @@ export async function changeRol(req, res, next) {
     next(error);
   }
 }
+
+export async function deleteCartFromUser(req, res, next) {
+  try {
+    await usersService.deleteCart(res.session._id);
+    next();
+  } catch (error) {
+    next(error);
+  }
+}

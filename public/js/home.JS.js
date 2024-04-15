@@ -153,3 +153,17 @@ botonBuscar.addEventListener("click", async (e) => {
   });
   mostrarProductosPaginados(productsPag.payload.payload);
 });
+
+async function terminarCompra() {
+  const ticket = await fetch(`/api/ticket/${usuario.carts}/purchase`, {
+    method: "POST",
+  }).then(async (res) => {
+    return await res.json();
+  });
+  if (ticket.status === "success") {
+    alert("Gracias por su compra!");
+    alert(JSON.stringify(ticket.payload));
+  } else {
+    alert("PROBLEMAS CON TERMINAR LA COMPRA - CHEQUEA EL STOCK!");
+  }
+}

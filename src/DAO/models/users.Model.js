@@ -101,8 +101,11 @@ class UsersClassModel {
       .lean();
     return await this._toPojo(updateUser);
   }
-  async deleteOne(query) {
-    throw new Error("NOT IMPLEMENTED");
+  async deleteOneCart(idUser) {
+    const updateUser = await this.#usersDao
+      .findByIdAndUpdate(idUser, { $set: { carts: "" } }, { new: true })
+      .lean();
+    return await this._toPojo(updateUser);
   }
 
   async findUserByCartId(_idCart, userEmail) {

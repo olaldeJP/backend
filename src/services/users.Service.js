@@ -113,6 +113,10 @@ class UsersService {
     const user = await this.#usersDao.changeRol(id);
     return user;
   }
+  async deleteCart(id) {
+    const user = await this.#usersDao.deleteOneCart(id);
+    return user;
+  }
 }
 
 export const usersService = new UsersService(userClassDao);
