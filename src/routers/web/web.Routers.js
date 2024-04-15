@@ -2,13 +2,12 @@ import { Router } from "express";
 import passport from "passport";
 import {
   realTimeProductsWeb,
-  chatHandlebars,
-  mostrarProducto,
   loginView,
   verPerfil,
   mostrarProductosCarrito,
   ventanaRegister,
   restartPassword,
+  productView,
   homeWeb,
 } from "../../controllers/web.Constrollers.js";
 import { getCookieTokenWeb } from "../../middlewares/cookie.Middleware.js";
@@ -22,7 +21,7 @@ webRouter.get("/home", homeWeb);
 webRouter.get("/realTimeProducts", realTimeProductsWeb);
 
 //Renreriza la ventana de chatHandlebars
-webRouter.get("/chatHandlebars", chatHandlebars);
+webRouter.get("/productView/:id", productView);
 
 //Muestra ventana de registro.handlebars
 webRouter.get("/register", ventanaRegister);
@@ -45,11 +44,6 @@ webRouter.get("/", loginView);
 webRouter.get("/perfil", verPerfil);
 
 webRouter.get("/restartpassword", restartPassword);
-
-//Muestra los productos con paginate con Handlebars
-
-//descripcion del producto
-webRouter.get("/:pid", mostrarProducto);
 
 // visualizar solo un carrito especifico
 webRouter.get("/carts/:cid", mostrarProductosCarrito);

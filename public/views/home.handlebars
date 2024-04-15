@@ -4,9 +4,11 @@
 {{#if user}}
 <h2>Bienvenido - Welcome</h2>
 <h2> {{user.first_name}} </h2>
-<button id="terminarCompra"> Terminar Compra </button><br><br><br>
-{{/if}}
+<button id="terminarCompra"> Terminar Compra </button><br><br>
+<div id="containerProductsCarts" class="containerCarts">
 
+</div>
+{{/if}}
 <div class="containerBuscador">
 <select name="ordenar" id="ordenar">
 <option value="desc">Ordenar Por Precio</option>

@@ -18,25 +18,13 @@ export async function homeWeb(req, res) {
   }
 }
 
-// se conecta a base de datos de chats y y los muestra
-export async function chatHandlebars(req, res) {
+export async function productView(req, res) {
   try {
-    return res.status(200).render("chat.handlebars", {
-      status: "success",
-    });
+    res.status(200).render("product.handlebars", { user: res.session });
   } catch (error) {
-    return res.status(400).json({ status: "error", message: error.message });
+    res.status(400).json({ status: "ERROR", message: error.message });
   }
 }
-
-export async function mostrarProducto(req, res) {
-  try {
-    return res.status(200).render("product.handlebars", {});
-  } catch (error) {
-    return res.status(400).json({ status: "ERROR", message: error.message });
-  }
-}
-
 export async function mostrarProductosCarrito(req, res) {
   try {
     res.status(200).render("carrito.handlebars");

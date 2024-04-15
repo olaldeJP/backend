@@ -1,4 +1,3 @@
-const usserName = "unUsuario";
 const ordenDeProduct = document.querySelector("#ordenar");
 const botonBuscar = document.querySelector("#botonBuscar");
 const botonDesc = document.querySelectorAll("#botonDescripcon");
@@ -12,14 +11,15 @@ const buttonPrev = document.querySelector("#aPrev");
 const buttonTerminarCompra = document.querySelector("#terminarCompra");
 const botonesProductos = document.querySelectorAll("#botonProducto");
 let ordenar = true;
-let cartUser = "";
+let usuario = {};
+let cart = {};
 let productsPag;
 window.addEventListener("load", async () => {
   const user = await fetch(`/api/sessions/current`).then(async (res) => {
     return await res.json();
   });
   if (user.status === "success") {
-    cartUser = user.payload.carts;
+    usuario = user.payload;
   }
   productsPag = await fetch(`/api/products/products/Paginate`).then(
     async (res) => {
@@ -64,29 +64,42 @@ async function mostrarProductosPaginados(payload) {
   for (let index = 0; index < payload.length; index++) {
     const newElement = document.createElement("div");
     newElement.classList.add("box");
-    newElement.innerHTML = `<p>title: ${payload[index].title}</p>
-    <p>description: ${payload[index].description}</p>
-    <p>price:${payload[index].price} </p>
+    newElement.innerHTML = `
+    <h3> ${payload[index].title}</h3>
+    <h5> $ ${payload[index].price} </h5>
     <p> STOCK: ${payload[index].stock}</p>
-    <button> Ver Descripcion </button> <br> `;
+    <button name="${payload[index]._id}" id=botonDescription> Ver Descripcion </button> <br> `;
     divContainer.appendChild(newElement);
-    if (!(cartUser === "")) {
+    if (usuario) {
       newElement.insertAdjacentHTML(
         "beforeend",
         `<br><button name="${payload[index]._id}" id="botonProducto">Agregar Al Carrito</button><br>`
       );
     }
   }
-  if (!(cartUser === "")) {
+  if (usuario) {
     document.querySelectorAll("#botonProducto").forEach((boton) => {
       // Agregar event listener a cada botón
       boton.addEventListener("click", async function () {
-        const addProducToCartt = await fetch(
-          `/api/carts/${cartUser}/product/${this.name}`
-        );
+        const addProducToCart = await fetch(
+          `/api/carts/${usuario.carts}/product/${this.name}`,
+          {
+            method: "POST",
+          }
+        ).then(async (res) => {
+          return await res.json();
+        });
+        alert(addProducToCart.payload.products);
       });
     });
   }
+
+  document.querySelectorAll("#botonDescription").forEach((boton) => {
+    // Agregar event listener a cada botón
+    boton.addEventListener("click", async function () {
+      window.location.href = `/productView/${this.name}`;
+    });
+  });
 }
 
 buttonLimit.addEventListener("click", async () => {
