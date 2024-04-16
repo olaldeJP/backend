@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   addNewProduct,
-  isAuthorizate,
+  isPremiumOrAdmin,
   getAllProducts,
   getProductsById,
   linkProductOwner,
@@ -27,7 +27,7 @@ productsRouter.get(
 productsRouter.post(
   "/",
   getCookieToken,
-  isAuthorizate,
+  isPremiumOrAdmin,
   linkProductOwner,
   addNewProduct,
   successCreateProduct
@@ -36,7 +36,7 @@ productsRouter.post(
 productsRouter.put(
   "/:pid",
   getCookieToken,
-  isAuthorizate,
+  isPremiumOrAdmin,
   ownerOfProduct,
   updateProduct,
   succesResultProduct
@@ -44,7 +44,7 @@ productsRouter.put(
 productsRouter.delete(
   "/:pid",
   getCookieToken,
-  isAuthorizate,
+  isPremiumOrAdmin,
   ownerOfProduct,
   deleteProduct,
   succesResultProduct

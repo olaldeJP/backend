@@ -1,7 +1,7 @@
 import { ErrorType, NewError } from "../config/errors.Config.js";
 import { isAdmin, isPremium } from "../utils/authorizathion.js";
 import { productService } from "../services/products.Service.js";
-export async function isAuthorizate(req, res, next) {
+export async function isPremiumOrAdmin(req, res, next) {
   try {
     if ((await isAdmin(res.session)) || (await isPremium(res.session))) {
       return next();
