@@ -15,6 +15,7 @@ import {
   succesResultProduct,
   successCreateProduct,
 } from "../../controllers/statusManager.Controllers.js";
+import { upload } from "../../config/multer.Config.js";
 export const productsRouter = new Router();
 
 productsRouter.get("/", getAllProducts, succesResultProduct);
@@ -29,6 +30,7 @@ productsRouter.post(
   getCookieToken,
   isPremiumOrAdmin,
   linkProductOwner,
+  upload.array("files", 4),
   addNewProduct,
   successCreateProduct
 );
