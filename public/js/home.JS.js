@@ -71,11 +71,19 @@ async function mostrarProductosPaginados(payload) {
     <p> STOCK: ${payload[index].stock}</p>
     <button name="${payload[index]._id}" id=botonDescription> Ver Descripcion </button> <br> `;
     divContainer.appendChild(newElement);
+
     if (usuario) {
-      newElement.insertAdjacentHTML(
-        "beforeend",
-        `<br><button name="${payload[index]._id}" id="botonProducto">Agregar Al Carrito</button><br>`
-      );
+      if (usuario._id === payload[index].owner) {
+        newElement.insertAdjacentHTML(
+          "beforeend",
+          `<br><button name="${payload[index]._id}" id="ModificarProducto">Modificar Producto</button><br>`
+        );
+      } else {
+        newElement.insertAdjacentHTML(
+          "beforeend",
+          `<br><button name="${payload[index]._id}" id="botonProducto">Agregar Al Carrito</button><br>`
+        );
+      }
     }
   }
   if (usuario) {
