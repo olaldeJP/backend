@@ -1,0 +1,31 @@
+components:
+  schemas:
+    Ticket:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID de la compra.
+          default: uuidv4
+        code:
+          type: string
+          description: Código de la compra.
+          default: uuidv4
+        purchase_datetime:
+          type: Date
+          format: date-time
+          description: Fecha y hora de la compra.
+          default: Date.now
+        amount:
+          type: number
+          description: Monto de la compra.
+        purchaser:
+          type: string
+          description: Comprador de la compra.
+          required: true
+      example:
+        _id: "fa9s8d7f9a8sd7f09a8sd7f0a890d0af5"
+        code: "3e97c3b1-9ec5-4b2a-b672-0c13b58fe04c"
+        purchase_datetime: "2024-04-14T10:30:00Z"
+        amount: 50
+        purchaser: "John Doe"
