@@ -6,9 +6,9 @@ const storage = multer.diskStorage({
     if (req.body.type === "profile") {
       uploadPath = "./public/";
     } else if (req.body.type === "documents") {
-      uploadPath = "../../../public/";
+      uploadPath = "./public/";
     } else if (req.body.type === "products") {
-      uploadPath = "../../public/";
+      uploadPath = "./public/storage/products";
     }
 
     cb(null, uploadPath);

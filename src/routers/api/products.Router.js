@@ -8,6 +8,7 @@ import {
   updateProduct,
   ownerOfProduct,
   deleteProduct,
+  deleteTypeLinkImages,
   getProductsPaginate,
 } from "../../middlewares/products.Middleware.js";
 import { getCookieToken } from "../../middlewares/cookie.Middleware.js";
@@ -29,8 +30,9 @@ productsRouter.post(
   "/",
   getCookieToken,
   isPremiumOrAdmin,
-  linkProductOwner,
   upload.array("files", 4),
+  deleteTypeLinkImages,
+  linkProductOwner,
   addNewProduct,
   successCreateProduct
 );

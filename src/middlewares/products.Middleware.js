@@ -89,3 +89,14 @@ export async function getProductsPaginate(req, res, next) {
     next(error);
   }
 }
+export async function deleteTypeLinkImages(req, res, next) {
+  try {
+    delete req.body.type;
+    req.body.thumbnail = req.files.map((elemt) => {
+      return elemt.path;
+    });
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
