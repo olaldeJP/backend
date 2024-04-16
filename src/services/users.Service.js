@@ -42,6 +42,21 @@ class UsersService {
     }
     return user;
   }
+  async getAllUsers() {
+    const users = await this.#usersDao.findUsers();
+    if (!users) {
+      throw new NewError(ErrorType.ERROR_REQUEST, "ERROR REQUEST");
+    }
+    const array = users.map((user) => {
+      return {
+        first_name: user.first_name,
+        email: user.email,
+        role: user.role,
+        last_connection: user.last_connection,
+      };
+    });
+    return array;
+  }
   async loginUser(query) {
     const user = await this.#usersDao.readOne(query);
     if (!user) {
@@ -116,6 +131,22 @@ class UsersService {
   async deleteCart(id) {
     const user = await this.#usersDao.deleteOneCart(id);
     return user;
+  }
+  async getUsersInactives(users) {
+    const array = await users.filter((user) => {
+      if (!(user.role === "admin")) {
+        const currentDate = new Date();
+        const dif = currentDate - new Date(user.last_connection);
+        const difMints = Math.abs(dif) / (1000 * 60);
+        return difMints > 120;
+      }
+    });
+    return array;
+  }
+  async deleteUsers(array) {
+    await array.forEach((element) => {
+      this.#usersDao.deleteUser(element);
+    });
   }
 }
 

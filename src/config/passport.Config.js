@@ -30,6 +30,15 @@ export const initializePassport = (app) => {
     )
   );
 
+  // Serialize y deserialize el usuario
+  passport.serializeUser((user, done) => {
+    done(null, user);
+  });
+
+  passport.deserializeUser((obj, done) => {
+    done(null, obj);
+  });
+
   passport.use(
     "loginGithub",
     new GitHubStrategy(
@@ -40,16 +49,27 @@ export const initializePassport = (app) => {
         callbackURL: GITHUB_URL_CALLBACK,
       },
       async (__, ___, profile, done) => {
-        let usuario = await usersService.buscarUser({
-          email: profile.username,
-        });
-        if (!usuario) {
-          usuario = await usersService.register({
-            first_name: profile.username,
-            email: profile.username,
-          });
+        try {
+          var usuario = await usersService.findUserByEmail(profile.username);
+          if (!usuario) {
+            usuario = await usersService.register({
+              first_name: profile.username,
+              email: profile.username,
+            });
+          }
+          done(null, usuario.toObject());
+        } catch (error) {
+          try {
+            usuario = await usersService.register({
+              first_name: profile.username,
+              email: profile.username,
+              password: profile.username,
+            });
+            done(null, usuario.toObject());
+          } catch (error) {
+            return error;
+          }
         }
-        done(null, usuario.toObject());
       }
     )
   );
@@ -63,4 +83,5 @@ export const initializePassport = (app) => {
   });
 
   app.use(passport.initialize());
+  app.use(passport.session());
 };

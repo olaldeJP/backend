@@ -10,7 +10,11 @@ import {
   productView,
   homeWeb,
 } from "../../controllers/web.Constrollers.js";
-import { getCookieTokenWeb } from "../../middlewares/cookie.Middleware.js";
+import {
+  getCookieTokenWeb,
+  saveCookieToken,
+} from "../../middlewares/cookie.Middleware.js";
+import { updateTime } from "../../middlewares/users.Middleware.js";
 //import { guardarUserToken } from "../../middlewares/cookies.Middlewares.js";
 
 export const webRouter = new Router();
@@ -26,18 +30,15 @@ webRouter.get("/productView/:id", productView);
 //Muestra ventana de registro.handlebars
 webRouter.get("/register", ventanaRegister);
 
-//Logearse con GitHub
 webRouter.get("/githublogin", passport.authenticate("loginGithub"));
-/*
+
 webRouter.get(
   "/githubcallback",
   passport.authenticate("loginGithub", { failWithError: true }),
-  guardarUserToken,
-  async (req, res) => {
-    res.redirect("/");
-  }
-);*/
-//////Muestra ventana de Login.handlebars
+  saveCookieToken,
+  homeWeb
+);
+
 webRouter.get("/", loginView);
 
 //////Muestra ventana de Login.handlebars

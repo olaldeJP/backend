@@ -74,9 +74,11 @@ class UsersClassModel {
       .lean();
     return this._toPojo(user);
   }
-
+  async findUsers() {
+    return await this.#usersDao.find();
+  }
   async findArrayCarts(_idUser) {
-    const array = await this.findUserId(_idUser);
+    const array = await this.find();
     return array.carts;
   }
   async updateDate(emailUser) {
@@ -107,7 +109,9 @@ class UsersClassModel {
       .lean();
     return await this._toPojo(updateUser);
   }
-
+  async deleteUser(user) {
+    return this.#usersDao.deleteOne({ email: user.email });
+  }
   async findUserByCartId(_idCart, userEmail) {
     const user = await this.#usersDao
       .findOne({ email: userEmail, carts: { _id: _idCart } })

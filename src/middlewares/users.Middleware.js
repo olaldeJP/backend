@@ -87,3 +87,28 @@ export async function deleteCartFromUser(req, res, next) {
     next(error);
   }
 }
+
+export async function getUsersData(req, res, next) {
+  try {
+    res["users"] = await usersService.getAllUsers();
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
+export async function checkUsersInactive(req, res, next) {
+  try {
+    res["usersInactive"] = await usersService.getUsersInactives(res.users);
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
+export async function deleteUsers(req, res, next) {
+  try {
+    await usersService.deleteUsers(res.usersInactive);
+    next();
+  } catch (error) {
+    next(error);
+  }
+}

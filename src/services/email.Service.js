@@ -39,6 +39,17 @@ class EmailService {
     };
     await this.transport.sendMail(emailOptions);
   }
+  async deleteUserEmail(emailUser) {
+    const emailOptions = {
+      from: EMAIL_USER,
+      to: emailUser,
+      subject: "Your Account was deleted",
+      html: `<p>
+      Since you were inactive for more than 30 minutes we deleted your account, don't hang up next time, la proxima no cuelgues
+      Greetings, - Saludos</p>`,
+    };
+    await this.transport.sendMail(emailOptions);
+  }
 }
 
 export const emailService = new EmailService();

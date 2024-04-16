@@ -6,16 +6,21 @@ import {
   checkToken,
   checkUserById,
   checkDocuments,
+  checkUsersInactive,
+  deleteUsers,
   updatePassword,
+  getUsersData,
   changeRol,
 } from "../../middlewares/users.Middleware.js";
 import {
   welcomeEmail,
   sendEmailChangePassword,
+  sendEmailDeleteAccount,
 } from "../../middlewares/email.Middleware.js";
 import {
   returnSuccess,
   successcreateUser,
+  returnUsers,
 } from "../../controllers/statusManager.Controllers.js";
 import { updateFilesUser } from "../../middlewares/multer.Middleware.js";
 import { upload } from "../../config/multer.Config.js";
@@ -42,7 +47,7 @@ usersRouter.get(
   updatePassword,
   returnSuccess
 );
-
+usersRouter.get("/", getUsersData, returnUsers);
 usersRouter.put(
   "/premium/:idUser",
   getCookieToken,
@@ -56,5 +61,13 @@ usersRouter.post(
   checkUserById,
   upload.array("files", 4),
   updateFilesUser,
+  returnSuccess
+);
+usersRouter.delete(
+  "/",
+  getUsersData,
+  checkUsersInactive,
+  deleteUsers,
+  sendEmailDeleteAccount,
   returnSuccess
 );
