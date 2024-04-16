@@ -1,10 +1,15 @@
 paths:
-  /api/sessions:
+  /api/sessions/login:
     post:
-      summary: crea una sesion
+      summary: crea un token con jwt y lo envia a la cookie authorizathion
       tags:
       - Sessions
   /api/sessions/current:
+    get:
+      summary: devuelve los datos del usuario sin la contraseña
+      tags:
+      - Sessions
+  /api/sessions/logout:
     delete:
       summary: borra la sesion actual del usuario logueado
       tags:
