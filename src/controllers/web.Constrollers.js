@@ -3,7 +3,7 @@
 export async function realTimeProductsWeb(req, res) {
   return res.status(200).render("realTimeProducts.handlebars", {
     titulo: " realTimeProductsWeb",
-    user: req.user,
+    user: req.session,
   });
 }
 //Muestra la pagina principal con los productos paginados
