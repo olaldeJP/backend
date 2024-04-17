@@ -65,16 +65,7 @@ async function mostrarProductosPaginados(payload) {
   for (let index = 0; index < payload.length; index++) {
     const newElement = document.createElement("div");
     const pathImg = payload[index].thumbnail[0].slice(7);
-    /*  const carrusel = document.createElement("div");
-    carrusel.innerHTML=`
-    <div class="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item"><img src="imagen1.jpg" alt="Imagen 1"></div>
-      <div class="carousel-item"><img src="imagen2.jpg" alt="Imagen 2"></div>
-      <div class="carousel-item"><img src="imagen3.jpg" alt="Imagen 3"></div>
-    </div>
-  </div>`
-   */ newElement.classList.add("box");
+    newElement.classList.add("box");
     newElement.innerHTML = `
     <h3> ${payload[index].title}</h3>
   
@@ -85,7 +76,7 @@ async function mostrarProductosPaginados(payload) {
     divContainer.appendChild(newElement);
 
     if (usuario) {
-      if (usuario._id === payload[index].owner) {
+      if (usuario._id === payload[index].owner || usuario.role === "admin") {
         newElement.insertAdjacentHTML(
           "beforeend",
           `<br><button name="${payload[index]._id}" onclick="irUpdateProduct(this.name)"id="ModificarProducto">Modificar Producto</button><br>`

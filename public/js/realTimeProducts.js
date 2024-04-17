@@ -2,18 +2,16 @@ const buttonProducts = document.querySelector("#formularioProducts");
 
 buttonProducts?.addEventListener("submit", async (event) => {
   event.preventDefault();
-  alert("dale");
-  /*
-      await fetch("/api/products", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(JSONProductForm()),
-      });
-      */
+  const elBody = await JSONProductForm();
+  await fetch("/api/products", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(elBody),
+  });
 });
-function JSONProductForm() {
+async function JSONProductForm() {
   let productForm = {};
   if (formProduct.titulo.value) {
     productForm.title = formProduct.titulo.value;
@@ -33,6 +31,5 @@ function JSONProductForm() {
   if (formProduct.stock.value) {
     productForm.stock = formProduct.stock.value;
   }
-
   return productForm;
 }

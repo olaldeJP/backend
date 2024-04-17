@@ -20,3 +20,19 @@ formLogout?.addEventListener("click", async (event) => {
     alert(error.message);
   }
 });
+
+async function verUsuarios() {
+  fetch("api/users/")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((users) => {
+      alert(JSON.stringify(users));
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+}
