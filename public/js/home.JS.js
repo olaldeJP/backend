@@ -12,7 +12,7 @@ const buttonTerminarCompra = document.querySelector("#terminarCompra");
 const botonesProductos = document.querySelectorAll("#botonProducto");
 const containerProductCart = document.querySelector("#containerProductsCarts");
 let ordenar = true;
-let usuario = {};
+let usuario = null;
 let cart = {};
 let productsPag;
 window.addEventListener("load", async () => {
@@ -64,9 +64,21 @@ async function mostrarProductosPaginados(payload) {
   divContainer.innerHTML = "";
   for (let index = 0; index < payload.length; index++) {
     const newElement = document.createElement("div");
-    newElement.classList.add("box");
+    const pathImg = payload[index].thumbnail[0].slice(7);
+    /*  const carrusel = document.createElement("div");
+    carrusel.innerHTML=`
+    <div class="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item"><img src="imagen1.jpg" alt="Imagen 1"></div>
+      <div class="carousel-item"><img src="imagen2.jpg" alt="Imagen 2"></div>
+      <div class="carousel-item"><img src="imagen3.jpg" alt="Imagen 3"></div>
+    </div>
+  </div>`
+   */ newElement.classList.add("box");
     newElement.innerHTML = `
     <h3> ${payload[index].title}</h3>
+  
+    <img src="${pathImg}" alt="Imagen" class="imgBox">
     <h5> $ ${payload[index].price} </h5>
     <p> STOCK: ${payload[index].stock}</p>
     <button name="${payload[index]._id}" id=botonDescription> Ver Descripcion </button> <br> `;
@@ -76,7 +88,7 @@ async function mostrarProductosPaginados(payload) {
       if (usuario._id === payload[index].owner) {
         newElement.insertAdjacentHTML(
           "beforeend",
-          `<br><button name="${payload[index]._id}" id="ModificarProducto">Modificar Producto</button><br>`
+          `<br><button name="${payload[index]._id}" onclick="irUpdateProduct(this.name)"id="ModificarProducto">Modificar Producto</button><br>`
         );
       } else {
         newElement.insertAdjacentHTML(
@@ -120,7 +132,9 @@ async function actualizarListadoProductos(products) {
     );
   });
 }
-
+async function irUpdateProduct(_id) {
+  window.location.href = `/updateProduct/:${_id}`;
+}
 buttonLimit.addEventListener("click", async () => {
   productsPag = await fetch(
     `/api/products/products/Paginate/?limit=${limit.value}`

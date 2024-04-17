@@ -61,3 +61,10 @@ export async function verPerfil(req, res) {
 export async function restartPassword(req, res) {
   res.render("restartPassword.handlebars");
 }
+
+export async function viewUpdateProduct(req, res) {
+  res.render("updateProduct.handlebars", {
+    status: "success",
+    user: res.session,
+  });
+}

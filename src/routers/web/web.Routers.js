@@ -8,6 +8,7 @@ import {
   ventanaRegister,
   restartPassword,
   productView,
+  viewUpdateProduct,
   homeWeb,
 } from "../../controllers/web.Constrollers.js";
 import {
@@ -48,3 +49,4 @@ webRouter.get("/restartpassword", restartPassword);
 
 // visualizar solo un carrito especifico
 webRouter.get("/carts/:cid", mostrarProductosCarrito);
+webRouter.get("/updateProduct/:id", viewUpdateProduct);

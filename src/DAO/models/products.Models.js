@@ -7,7 +7,7 @@ const productoSchema = new Schema(
     _id: { type: String, default: uuidv4 },
     title: { type: String, required: true },
     code: { type: Number, required: true, unique: true },
-    description: { type: String },
+    description: { type: String, default: "No Description" },
     price: { type: Number, required: true },
     owner: { type: String, required: true, ref: "users.email" },
     stock: { type: Number, required: true, default: 0 },
