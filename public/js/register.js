@@ -4,7 +4,7 @@ const enviarR = document.querySelector("#enviarRegistro");
 formReg?.addEventListener("submit", async (event) => {
   event.preventDefault();
   //Se envia la peticion POST con la informacion del formulario y se redirige al home con el res.session['usser] {first_name , last_name. isAdmin}
-  const response = await fetch("/api/users/", {
+  const response = await fetch("api/users/create", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     // @ts-ignore
@@ -12,6 +12,7 @@ formReg?.addEventListener("submit", async (event) => {
   });
   if (response.status == 201) {
     // el satatus esta bien redirecciona a /
+    alert("User Create");
     window.location.href = `/`;
   }
 });
