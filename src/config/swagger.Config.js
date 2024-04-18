@@ -15,6 +15,10 @@ const SWAGGER_CONFIG = {
 
 const spec = swaggerJSDoc(SWAGGER_CONFIG);
 export const swaggerConf = (app) => {
-  app.use("/api-doc", swaggerUiExpress.serve, swaggerUiExpress.setup(spec));
-  logger.INFO(`Swagger config - Success`);
+  try {
+    app.use("/api-doc", swaggerUiExpress.serve, swaggerUiExpress.setup(spec));
+    logger.HTTP(`Swagger config - Success`);
+  } catch (error) {
+    logger.FATAL(`Swagger Config - ${error}- Error`);
+  }
 };
