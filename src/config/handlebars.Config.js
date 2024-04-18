@@ -7,6 +7,7 @@ export const handlebarsConf = (app) => {
       engine({
         helpers: {
           eq: (v1, v2) => v1 === v2,
+          neq: (v1, v2) => v1 !== v2,
         },
       })
     );

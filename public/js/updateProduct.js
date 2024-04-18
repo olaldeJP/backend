@@ -36,7 +36,7 @@ formProduct.addEventListener("submit", async (event) => {
   if (newProduct.status === "success") {
     alert("PRODUCT UPDATE SUCCESS");
     window.location.reload();
-  } else alert('"ERROR TO UPDATE PRODUCT"');
+  } else alert("ERROR -  " + newProduct.message);
 });
 
 async function JSONProductForm() {

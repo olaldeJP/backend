@@ -54,7 +54,7 @@ export async function updateProduct(req, res, next) {
 export async function ownerOfProduct(req, res, next) {
   try {
     const product = await productService.findById(req.params.pid);
-    if (res.session._id === product.owner) {
+    if (res.session._id === product.owner || res.session.role === "admin") {
       return next();
     }
     throw new NewError(
