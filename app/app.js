@@ -8,6 +8,8 @@ import { cookieConf } from "../src/config/cookie.Config.js";
 import { webRouter } from "../src/routers/web/web.Routers.js";
 import { handlebarsConf } from "../src/config/handlebars.Config.js";
 import { errorManager } from "../src/controllers/errorsManager.Controllers.js";
+import { swaggerConf } from "../src/config/swagger.Config.js";
+
 export class Server {
   #server;
   constructor(URL_MONGO) {
@@ -28,6 +30,22 @@ export class Server {
     } catch (error) {
       logger.FATAL(` Server Config - ${error}`);
     }
+
+    this.#server = express();
+    this.#server.use(express.json());
+    this.#server.use(express.urlencoded({ extended: true }));
+    this.#server.use(express.static("public"));
+    cookieConf(this.#server);
+    sessionConf(this.#server, URL_MONGO);
+    initializePassport(this.#server);
+    handlebarsConf(this.#server);
+    mongoConnection(URL_MONGO);
+    swaggerConf(this.#server);
+    this.#server.use("/api", apiRouter);
+    this.#server.use("/", webRouter);
+    this.#server.use(errorManager);
+    logger.INFO(`Server Config - Success`);
+    developer;
   }
   connect(port) {
     return new Promise((resolve, reject) => {
