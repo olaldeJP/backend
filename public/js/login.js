@@ -30,4 +30,30 @@ formLogin.addEventListener("submit", async (event) => {
   }
 });
 
+async function logIn() {
+  try {
+    const inputsValores = JSON.stringify({
+      email: document.querySelector("#emailUser").value,
+      password: document.querySelector("#passwordUser").value,
+    });
 
+    const response = await fetch("api/sessions/login", {
+      // /login para hacerlo con session
+
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // @ts-ignore
+      body: inputsValores,
+    });
+    const res = await response.json(); // si el status es Success vuelve a / a ver los productos, sino envia una alert
+    if (res.status === "success") {
+      const cart = await fetch("/api/carts/", { method: "POST" });
+      console.log(cart.json);
+      window.location.href = `/home`;
+    } else {
+      alert("INVALID DATA");
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+}

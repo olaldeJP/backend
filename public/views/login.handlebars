@@ -1,11 +1,18 @@
 
-<form action="" method="post" id="formulario">
-    <label for="email">Email</label>
-    <input type="text" name="email" id="email">
-    <label for="password">Contraseña</label>
-    <input type="password" name="" id="password">
-    <input type="submit" value="Log In">
-</form>
-<p>Olvidaste tu contraseña? Hacé click <a href="/restartpassword">aquí</a></p>
-<p>Preferis identificarte con GitHub? Hacé click <a href="/githublogin">AQUI</a>
+<section class="sectLog">
+<div class="form__group field divI">
+    <input id="emailUser"  type="input" class="form__field" placeholder="Email" required="">
+    <label for="Email" class="form__label">Email</label>
+      
+</div><div class="form__group field divI">
+    <input id="passwordUser" type="input" class="form__field" placeholder="password" required="">
+    <label for="password" class="form__label">Password</label>
+      
+</div>
+<button onclick="logIn()"> Log In </button>
+</section>
+<section class="sectLog">
+<p class="divI">Olvidaste tu contraseña? Hacé click <a class="btn" href="/restartpassword">aquí</a></p>
+<p>Preferis identificarte con GitHub? Hacé click <a class="btn" href="/githublogin">AQUI</a>
+</section>
 <script src="../js/login.js"></script>
