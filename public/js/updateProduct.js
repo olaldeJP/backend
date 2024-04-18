@@ -59,3 +59,19 @@ async function JSONProductForm() {
 
   return productForm;
 }
+
+async function deleteProduct() {
+  const deleteP = await fetch(`http://localhost:8080/api/products/${id}`, {
+    method: "DELETE",
+  })
+    .then(async (res) => {
+      return await res.json();
+    })
+    .catch((error) => {
+      alert("Error Delete Producto " + error);
+    });
+  if (deleteP.status === "success") {
+    alert("Product Deleted Success");
+    window.location.href = "/home";
+  }
+}

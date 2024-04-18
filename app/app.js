@@ -29,7 +29,6 @@ export class Server {
       logger.FATAL(` Server Config - ${error}`);
     }
   }
-
   connect(port) {
     return new Promise((resolve, reject) => {
       try {

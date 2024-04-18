@@ -1,15 +1,23 @@
 const buttonProducts = document.querySelector("#formularioProducts");
-
+const formProduct = document.querySelector("#formularioProducts");
 buttonProducts?.addEventListener("submit", async (event) => {
   event.preventDefault();
   const elBody = await JSONProductForm();
-  await fetch("/api/products", {
+  elBody.type = "products";
+  const response = await fetch("/api/products/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(elBody),
-  });
+  })
+    .then(async (res) => {
+      return await res.json();
+    })
+    .catch((error) => {
+      alert(error);
+    });
+  alert(response);
 });
 async function JSONProductForm() {
   let productForm = {};
