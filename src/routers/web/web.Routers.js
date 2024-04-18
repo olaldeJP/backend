@@ -8,14 +8,13 @@ import {
   ventanaRegister,
   restartPassword,
   productView,
+  viewUpdateProduct,
   homeWeb,
 } from "../../controllers/web.Constrollers.js";
 import {
   getCookieTokenWeb,
   saveCookieToken,
 } from "../../middlewares/cookie.Middleware.js";
-import { updateTime } from "../../middlewares/users.Middleware.js";
-//import { guardarUserToken } from "../../middlewares/cookies.Middlewares.js";
 
 export const webRouter = new Router();
 webRouter.use(getCookieTokenWeb);
@@ -48,3 +47,4 @@ webRouter.get("/restartpassword", restartPassword);
 
 // visualizar solo un carrito especifico
 webRouter.get("/carts/:cid", mostrarProductosCarrito);
+webRouter.get("/updateProduct/:id", viewUpdateProduct);

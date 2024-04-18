@@ -1,7 +1,7 @@
 import { ErrorType, NewError } from "../config/errors.Config.js";
 import { isAdmin, isPremium } from "../utils/authorizathion.js";
 import { productService } from "../services/products.Service.js";
-export async function isAuthorizate(req, res, next) {
+export async function isPremiumOrAdmin(req, res, next) {
   try {
     if ((await isAdmin(res.session)) || (await isPremium(res.session))) {
       return next();
@@ -54,7 +54,7 @@ export async function updateProduct(req, res, next) {
 export async function ownerOfProduct(req, res, next) {
   try {
     const product = await productService.findById(req.params.pid);
-    if (res.session._id === product.owner) {
+    if (res.session._id === product.owner || res.session.role === "admin") {
       return next();
     }
     throw new NewError(
@@ -84,6 +84,19 @@ export async function addNewProduct(req, res, next) {
 export async function getProductsPaginate(req, res, next) {
   try {
     res["products"] = await productService.showPaginateProducts(req);
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
+export async function deleteTypeLinkImages(req, res, next) {
+  try {
+    delete req.body.type;
+    if (req.files) {
+      req.body.thumbnail = req.files.map((elemt) => {
+        return elemt.path;
+      });
+    }
     next();
   } catch (error) {
     next(error);

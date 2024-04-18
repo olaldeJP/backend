@@ -4,9 +4,10 @@
 {{#if user}}
 <h2>Bienvenido - Welcome</h2>
 <h2> {{user.first_name}} </h2>
+{{#if (neq user.role 'admin')}}
 <button id="terminarCompra" onclick="terminarCompra()" class="botonCompra"> Terminar Compra </button><br><br>
 <div id="containerProductsCarts" class="containerCarts">
-
+{{/if}}
 </div>
 {{/if}}
 <div class="containerBuscador">
@@ -19,7 +20,7 @@
 <button id="botonBuscar">Buscar</button>
 <input type="number" placeholder="Limit" id='limit'>
 <button name="limite" id="limitButton">Limit</button>
-</div>
+</div><br>
     
 
 <div class="container" id="containerProducts">

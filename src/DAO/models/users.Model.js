@@ -119,7 +119,7 @@ class UsersClassModel {
     if (!user) {
       throw new NewError(
         ErrorType.INVALID_DATA,
-        "INVALID DATA - Cart Not Found"
+        "INVALID DATA - Cart Not Foud"
       );
     }
     return this._toPojo(user);

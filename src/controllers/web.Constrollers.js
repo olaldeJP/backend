@@ -3,7 +3,7 @@
 export async function realTimeProductsWeb(req, res) {
   return res.status(200).render("realTimeProducts.handlebars", {
     titulo: " realTimeProductsWeb",
-    user: req.user,
+    user: req.session,
   });
 }
 //Muestra la pagina principal con los productos paginados
@@ -60,4 +60,11 @@ export async function verPerfil(req, res) {
 
 export async function restartPassword(req, res) {
   res.render("restartPassword.handlebars");
+}
+
+export async function viewUpdateProduct(req, res) {
+  res.render("updateProduct.handlebars", {
+    status: "success",
+    user: res.session,
+  });
 }

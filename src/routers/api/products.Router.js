@@ -1,13 +1,14 @@
 import { Router } from "express";
 import {
   addNewProduct,
-  isAuthorizate,
+  isPremiumOrAdmin,
   getAllProducts,
   getProductsById,
   linkProductOwner,
   updateProduct,
   ownerOfProduct,
   deleteProduct,
+  deleteTypeLinkImages,
   getProductsPaginate,
 } from "../../middlewares/products.Middleware.js";
 import { getCookieToken } from "../../middlewares/cookie.Middleware.js";
@@ -15,6 +16,7 @@ import {
   succesResultProduct,
   successCreateProduct,
 } from "../../controllers/statusManager.Controllers.js";
+import { upload } from "../../config/multer.Config.js";
 export const productsRouter = new Router();
 
 productsRouter.get("/", getAllProducts, succesResultProduct);
@@ -27,7 +29,9 @@ productsRouter.get(
 productsRouter.post(
   "/",
   getCookieToken,
-  isAuthorizate,
+  isPremiumOrAdmin,
+  upload.array("files", 4),
+  deleteTypeLinkImages,
   linkProductOwner,
   addNewProduct,
   successCreateProduct
@@ -36,7 +40,7 @@ productsRouter.post(
 productsRouter.put(
   "/:pid",
   getCookieToken,
-  isAuthorizate,
+  isPremiumOrAdmin,
   ownerOfProduct,
   updateProduct,
   succesResultProduct
@@ -44,7 +48,7 @@ productsRouter.put(
 productsRouter.delete(
   "/:pid",
   getCookieToken,
-  isAuthorizate,
+  isPremiumOrAdmin,
   ownerOfProduct,
   deleteProduct,
   succesResultProduct

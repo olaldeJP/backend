@@ -1,0 +1,83 @@
+paths:
+  /api/users/create:
+    post:
+      summary: Crea un nuevo usuario.
+      tags:
+        - User
+      responses:
+        "201":
+          description: Éxito
+
+  /api/users/sendEmailToChange:
+    put:
+      summary: Envía un correo electrónico para cambiar la contraseña.
+      tags:
+        - User
+      responses:
+        "200":
+          description: Éxito
+
+  /api/users/changePassword/{tokenjwt}:
+    get:
+      summary: Cambia la contraseña del usuario usando un token JWT.
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: tokenjwt
+          required: true
+          schema:
+            type: string
+          description: Token JWT para la autenticación.
+      responses:
+        "200":
+          description: Éxito
+
+  /api/users/:
+    get:
+      summary: Obtiene todos los usuarios.
+      tags:
+        - User
+      responses:
+        "200":
+          description: Éxito
+
+    delete:
+      summary: Elimina todos los usuarios.
+      tags:
+        - User
+      responses:
+        "200":
+          description: Éxito
+
+  /api/users/premium/{idUser}:
+    put:
+      summary: Actualiza el estado de un usuario a premium.
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: idUser
+          required: true
+          schema:
+            type: string
+          description: ID del usuario.
+      responses:
+        "200":
+          description: Éxito
+
+  /api/users/{uid}/documents:
+    post:
+      summary: Agrega documentos a un usuario específico.
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          schema:
+            type: string
+          description: ID del usuario.
+      responses:
+        "200":
+          description: Éxito

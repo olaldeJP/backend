@@ -5,7 +5,12 @@ export const COOKIE_OPTS = {
   maxAge: 1000 * 60 * 60 * 24,
   httpOnly: true,
 };
-
+import { logger } from "../utils/logger.js";
 export const cookieConf = async function (app) {
-  app.use(cookieParser(COOKIE_KEY));
+  try {
+    app.use(cookieParser(COOKIE_KEY));
+    logger.HTTP("Cookie Config - Success");
+  } catch (error) {
+    logger.FATAL("Cookie Config - Error");
+  }
 };

@@ -1,0 +1,54 @@
+paths:
+  /home:
+    get:
+      summary: Renderiza la página de inicio.
+      tags:
+        - Web
+
+  /realTimeProducts:
+    get:
+      summary: Retorna los productos en tiempo real.
+      tags:
+        - Web
+
+  /productView/{id}:
+    get:
+      summary: Retorna la vista del producto con el ID especificado.
+      tags:
+        - Web
+
+  /register:
+    get:
+      summary: Renderiza la página de registro.
+      tags:
+        - Web
+
+  /githublogin:
+    get:
+      summary: Redirige al usuario a la página de inicio de sesión de GitHub.
+      tags:
+        - Web
+
+  /githubcallback:
+    get:
+      summary: Procesa el callback después de la autenticación con GitHub.
+      tags:
+        - Web
+
+  /perfil:
+    get:
+      summary: Renderiza la página de perfil del usuario.
+      tags:
+        - Web
+
+  /restartpassword:
+    get:
+      summary: Renderiza la página para reiniciar la contraseña.
+      tags:
+        - Web
+
+  /carts/{cid}:
+    get:
+      summary: Retorna el carrito con el ID especificado.
+      tags:
+        - Web

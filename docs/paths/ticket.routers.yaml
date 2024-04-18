@@ -1,0 +1,6 @@
+paths:
+  /api/ticket:
+    post:
+      summary: crea un ticket
+      tags:
+      - Ticket

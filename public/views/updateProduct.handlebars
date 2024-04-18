@@ -1,0 +1,30 @@
+
+<h1>UPDATE PRODUCT</h1>
+
+<section class="sectionForms">
+
+<div class="divFormProducts ">
+    
+    <form id ="formularioProducts"class="formulario" action="">
+        <input name="titulo"id="titulo" type="text" placeholder="Titulo Del Producto">
+        <input name="description"id="description" type="text" placeholder="Descripcion">
+        <input name="precio" id="price" type="number" placeholder="price">
+        <input name="codigo" id="code" type="number" placeholder="code">
+        <input name="stock" id="stock" type="number" placeholder="Stock">
+        <input name="thumbnail" type="file" id="thumbnail">
+        <input type="submit" value="UPDATE">
+    </form>
+ </div>
+
+ </section>
+ <section class="sectionProducts">
+ <div class="boxElement">
+
+ </div>  
+ 
+ <button onclick="deleteProduct()">Eliminar Producto</button>
+ </section> 
+</main>
+{{>footer}}
+
+<script src="../js/updateProduct.js"></script>
