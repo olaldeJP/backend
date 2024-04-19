@@ -1,6 +1,6 @@
 
 
- <div class="">
+*<div class="">
     <form action=""  method="post" id="formRegister">
         <label for="email">Email:</label>
         <input type="text" name="email" id="email">
@@ -9,13 +9,39 @@
         <label for="last_name">Apellido:</label>
         <input type="text" name="last_name" id="last_name">
         <label for="age">Años:</label>
-        <input type="number" name="age" id="age">
+        <input type="number" name="age" id="agee">
         <label for="password">Constraseña</label>
         <input type="password" name="password" id="password">
         <button type="submit" id="enviarRegistro">Registrarse</button>
-        
-    </form>
+     </form>
  </div>
+ 
+<section class="divI">
+    <form id="nuevo"action="">
+<div class="form__group field divI">
+    <input id="emailUser"  type="input" class="form__field" placeholder="Email" required="true">
+    <label for="Email" class="form__label">Email</label>
+      
+</div><div class="form__group field divI">
+    <input id="passwordUser" type="password" class="form__field" placeholder="Contraseña" required="true">
+    <label for="password" class="form__label">Contraseña</label>
+ </div>
+ 
+<div class="form__group field divI">
+    <input id="nameUser"  type="input" class="form__field" placeholder="Nombre" required="true">
+    <label for="Nombre" class="form__label">Nombre</label>
+      
+</div><div class="form__group field divI">
+    <input id="secondName" type="input" class="form__field" placeholder="Apellido" required="">
+    <label for="Apellido" class="form__label">Apellido</label>
+ </div>
+ 
+<div class="form__group field divI">
+    <input id="age"  type="input" class="form__field" placeholder="Edad" required="">
+    <label for="Age" class="form__label">Edad</label>
+      </form>
+<button onclick="createAccount()"> Crear Cuenta </button>
+</section>
 
 <script src="../js/register.js"></script>
 {{>footer}}
