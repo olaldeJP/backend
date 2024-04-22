@@ -4,6 +4,8 @@ import { productService } from "../services/products.Service.js";
 export async function isPremiumOrAdmin(req, res, next) {
   try {
     if ((await isAdmin(res.session)) || (await isPremium(res.session))) {
+      console.log(typeof req.body);
+      console.log(req.headers["content-type"]);
       return next();
     }
     throw new NewError(

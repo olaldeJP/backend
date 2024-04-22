@@ -1,43 +1,39 @@
 const buttonProducts = document.querySelector("#formularioProducts");
 const formProduct = document.querySelector("#formularioProducts");
 buttonProducts?.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const elBody = await JSONProductForm();
-  elBody.type = "products";
-  const response = await fetch("/api/products/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(elBody),
-  })
-    .then(async (res) => {
+  const formData = new FormData();
+  await JSONProductForm(formData);
+
+  // Agregar archivo
+  const fileInput = document.querySelector("#thumbnail");
+  if (fileInput.files.length > 0) {
+    formData.append("files", fileInput.files[0]); // Asume que solo se subirá un archivo
+  }
+
+  // Enviar datos
+  try {
+    const response = await fetch("/api/products/", {
+      method: "POST",
+      body: formData,
+    }).then(async (res) => {
       return await res.json();
-    })
-    .catch((error) => {
-      alert(error);
     });
-  alert(response);
+
+    if (response.status === "success") {
+      alert("Created Product Success");
+      window.location.href = "/home";
+    } else {
+      alert(response.message);
+    }
+  } catch (error) {
+    alert(error.message);
+  }
 });
-async function JSONProductForm() {
-  let productForm = {};
-  if (formProduct.titulo.value) {
-    productForm.title = formProduct.titulo.value;
-  }
-  if (formProduct.description.value) {
-    productForm.description = formProduct.description.value;
-  }
-  if (formProduct.precio.value) {
-    productForm.price = formProduct.precio.value;
-  }
-  if (formProduct.codigo.value) {
-    productForm.code = formProduct.codigo.value;
-  }
-  if (formProduct.thumbnail.value) {
-    productForm.thumbnail = formProduct.thumbnail.value;
-  }
-  if (formProduct.stock.value) {
-    productForm.stock = formProduct.stock.value;
-  }
-  return productForm;
+async function JSONProductForm(formData) {
+  formData.append("type", "products");
+  formData.append("title", document.querySelector("#titulo").value);
+  formData.append("description", document.querySelector("#description").value);
+  formData.append("price", document.querySelector("#precio").value);
+  formData.append("stock", document.querySelector("#stock").value);
+  formData.append("code", document.querySelector("#codigo").value);
 }

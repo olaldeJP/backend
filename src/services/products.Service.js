@@ -6,7 +6,7 @@ class ProductService {
     this.#productDao = productsModelClass;
   }
   async createProduct(data) {
-    const newProduct = this.#productDao.create(data);
+    const newProduct = await this.#productDao.create(data);
     if (!newProduct) {
       throw new NewError(ErrorType.ERROR_REQUEST, "Error to create product");
     }
