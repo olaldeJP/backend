@@ -2,6 +2,10 @@
     display: flex;
 }
 
+body {
+    background-color: #cac8c8a9;
+}
+
 .navBar {
 
     display: flex;
