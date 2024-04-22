@@ -22,6 +22,5 @@ sessionsRouter.post(
   saveCookieToken,
   succesReturnUser
 );
-
 sessionsRouter.get("/current", getCookieToken, returnSession);
 sessionsRouter.delete("/logout", logout, returnSuccess);

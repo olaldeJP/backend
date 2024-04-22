@@ -30,15 +30,25 @@ export const initializePassport = (app) => {
     )
   );
 
-  // Serialize y deserialize el usuario
-  passport.serializeUser((user, done) => {
-    done(null, user);
-  });
-
-  passport.deserializeUser((obj, done) => {
-    done(null, obj);
-  });
-
+  passport.use(
+    "loginGithub",
+    new GitHubStrategy(
+      {
+        clientID: GITHUB_CLIENT_ID,
+        clientSecret: GITHUB_CLIENT_SECRET,
+        callbackURL: GITHUB_URL_CALLBACK,
+      },
+      async function (accessToken, refreshToken, profile, done) {
+        try {
+          //     const user = await usersService.findOrCreate(profile.username);
+          return done(err, user);
+        } catch (error) {
+          return error;
+        }
+      }
+    )
+  );
+  /*
   passport.use(
     "loginGithub",
     new GitHubStrategy(
@@ -73,7 +83,7 @@ export const initializePassport = (app) => {
       }
     )
   );
-
+*/
   passport.serializeUser((user, next) => {
     next(null, user);
   });

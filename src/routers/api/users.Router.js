@@ -48,6 +48,7 @@ usersRouter.get(
   returnSuccess
 );
 usersRouter.get("/", getUsersData, returnUsers);
+
 usersRouter.put(
   "/premium/:idUser",
   getCookieToken,

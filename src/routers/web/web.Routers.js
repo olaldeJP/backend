@@ -33,9 +33,11 @@ webRouter.get("/githublogin", passport.authenticate("loginGithub"));
 
 webRouter.get(
   "/githubcallback",
-  passport.authenticate("loginGithub", { failWithError: true }),
-  saveCookieToken,
-  homeWeb
+  passport.authenticate("loginGithub", {
+    failWithError: true,
+    successRedirect_: "/home",
+    failureRedirect: "/",
+  })
 );
 
 webRouter.get("/", loginView);

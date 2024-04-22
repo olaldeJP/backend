@@ -148,6 +148,17 @@ class UsersService {
       this.#usersDao.deleteUser(element);
     });
   }
+  async findOrCreate(username) {
+    let user = this.#usersDao.findByEmail(username);
+    if (!user) {
+      user = this.register({
+        email: username,
+        first_name: username,
+        password: username,
+      });
+    }
+    return user;
+  }
 }
 
 export const usersService = new UsersService(userClassDao);
