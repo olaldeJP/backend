@@ -6,7 +6,7 @@ function createProductMock() {
     title: faker.commerce.productName(),
     description: faker.commerce.productDescription(),
     price: faker.commerce.price(),
-    thumbnail: "Random Thumbnail",
+    thumbnail: "path/img",
     code: faker.string.uuid(),
     stock: faker.helpers.rangeToNumber({ min: 1, max: 50 }),
   };
