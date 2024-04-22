@@ -9,12 +9,14 @@ import {
   restartPassword,
   productView,
   viewUpdateProduct,
+  changePasswordView,
   homeWeb,
 } from "../../controllers/web.Constrollers.js";
 import {
   getCookieTokenWeb,
   saveCookieToken,
 } from "../../middlewares/cookie.Middleware.js";
+import { updateTime } from "../../middlewares/users.Middleware.js";
 
 export const webRouter = new Router();
 webRouter.use(getCookieTokenWeb);
@@ -33,11 +35,10 @@ webRouter.get("/githublogin", passport.authenticate("loginGithub"));
 
 webRouter.get(
   "/githubcallback",
-  passport.authenticate("loginGithub", {
-    failWithError: true,
-    successRedirect_: "/home",
-    failureRedirect: "/",
-  })
+  passport.authenticate("loginGithub"),
+  updateTime,
+  saveCookieToken,
+  homeWeb
 );
 
 webRouter.get("/", loginView);
@@ -50,3 +51,4 @@ webRouter.get("/restartpassword", restartPassword);
 // visualizar solo un carrito especifico
 webRouter.get("/carts/:cid", mostrarProductosCarrito);
 webRouter.get("/updateProduct/:id", viewUpdateProduct);
+webRouter.get("/change/:token", changePasswordView);

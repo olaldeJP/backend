@@ -14,7 +14,7 @@ const UsersSchema = new Schema(
       required: true,
       default: "(NotNecesaryInThisCase)",
     },
-    carts: { type: String, ref: "carts._id" },
+    carts: { type: String, ref: "carts._id", default: "" },
     documents: { type: [Object] },
     last_connection: { type: String },
     role: { type: String, enum: ["admin", "user", "premium"], default: "user" },

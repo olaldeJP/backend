@@ -68,3 +68,9 @@ export async function viewUpdateProduct(req, res) {
     user: res.session,
   });
 }
+
+export async function changePasswordView(req, res) {
+  res.render("changePassword.handlebars", {
+    status: "success",
+  });
+}

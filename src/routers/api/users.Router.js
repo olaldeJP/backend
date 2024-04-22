@@ -38,10 +38,11 @@ usersRouter.post(
 usersRouter.put(
   "/sendEmailToChange",
   checkUserByEmail,
-  sendEmailChangePassword
+  sendEmailChangePassword,
+  returnSuccess
 );
 
-usersRouter.get(
+usersRouter.put(
   "/changePassword/:tokenjwt",
   checkToken,
   updatePassword,

@@ -30,7 +30,7 @@ class EmailService {
       from: EMAIL_USER,
       to: destinatario,
       subject: "Olvidaste Algo? - Forgot Something?",
-      html: `<p>Hey You! , Forget your password is totally normal , let me help you... just click <a href="http://localhost:8080/api/sessions/changePassword/:${jwtUser}">HERE</a> to change your password. 
+      html: `<p>Hey You! , Forget your password is totally normal , let me help you... just click <a href="https://backend-xfi3.onrender.com/change/${jwtUser}">HERE</a> to change your password. 
  
       This link Works for 1h Only, be Quick!!!! 
       Have a nice day, love you <3 

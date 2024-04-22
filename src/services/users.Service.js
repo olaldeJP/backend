@@ -149,9 +149,10 @@ class UsersService {
     });
   }
   async findOrCreate(username) {
-    let user = this.#usersDao.findByEmail(username);
+    const gitU = { email: username, first_name: username, password: username };
+    let user = await this.#usersDao.readOne(gitU);
     if (!user) {
-      user = this.register({
+      user = await this.register({
         email: username,
         first_name: username,
         password: username,
