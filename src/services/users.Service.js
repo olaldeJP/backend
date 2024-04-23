@@ -138,7 +138,7 @@ class UsersService {
         const currentDate = new Date();
         const dif = currentDate - new Date(user.last_connection);
         const difMints = Math.abs(dif) / (1000 * 60);
-        return difMints > 120;
+        return difMints > 2880;
       }
     });
     return array;
