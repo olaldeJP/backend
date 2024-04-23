@@ -78,7 +78,7 @@ class UsersClassModel {
     return await this.#usersDao.find();
   }
   async findArrayCarts(_idUser) {
-    const array = await this.find();
+    const array = await this.#usersDao.findOne({ _id: _idUser }).lean();
     return array.carts;
   }
   async updateDate(emailUser) {
