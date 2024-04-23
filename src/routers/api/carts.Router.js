@@ -11,10 +11,7 @@ import {
   deleteAllProducts,
   deleteProductFromCart,
   replaceCart,
-  subFromDataBase,
-  saveNewTicket,
   checkUserHasCart,
-  checkCartStock,
 } from "../../middlewares/carts.Middleware.js";
 import {
   returnSuccess,
@@ -51,15 +48,5 @@ cartsRouter.delete(
   "/:cid",
   checkCartIsFromUser,
   deleteAllProducts,
-  returnSuccess
-);
-
-cartsRouter.post(
-  "/:cid/purchase",
-  checkCartIsFromUser,
-  findCart,
-  checkCartStock,
-  subFromDataBase,
-  saveNewTicket,
   returnSuccess
 );
