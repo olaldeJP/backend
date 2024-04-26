@@ -25,6 +25,17 @@ class EmailService {
 
     await this.transport.sendMail(emailOptions);
   }
+  async emailTicket(ticket) {
+    const emailOptions = {
+      from: EMAIL_USER,
+      to: ticket.purchaser,
+      subject: "Gracias por tu compra! - Thanks For your purchase",
+      html: `<p>Gastaste un total de ${ticket.amount} en esta compra, agradecemos su compra! saludos
+
+      </p>`,
+    };
+    await this.transport.sendMail(emailOptions);
+  }
   async passwordChangeEmail(destinatario, jwtUser) {
     const emailOptions = {
       from: EMAIL_USER,

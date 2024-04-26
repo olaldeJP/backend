@@ -20,6 +20,14 @@ export async function sendEmailChangePassword(req, res, next) {
     next(error);
   }
 }
+export async function sendEmailTicket(req, res, next) {
+  try {
+    emailService.emailTicket(res.ticket);
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
 
 export async function sendEmailDeleteAccount(req, res, next) {
   try {

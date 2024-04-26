@@ -9,6 +9,7 @@ import {
 import { succesPurchase } from "../../controllers/statusManager.Controllers.js";
 import { getCookieToken } from "../../middlewares/cookie.Middleware.js";
 import { deleteCartFromUser } from "../../middlewares/users.Middleware.js";
+import { sendEmailTicket } from "../../middlewares/email.Middleware.js";
 
 export const ticketRouter = new Router();
 
@@ -20,6 +21,7 @@ ticketRouter.post(
   checkCartStock,
   subFromDataBase,
   saveNewTicket,
+  sendEmailTicket,
   deleteCartFromUser,
   succesPurchase
 );
